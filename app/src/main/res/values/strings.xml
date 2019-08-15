@@ -13,4 +13,6 @@
     <string name="menu_tools">Buy here!</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+    <string name="name_cam">Detected Text</string>
 </resources>

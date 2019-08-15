@@ -9,9 +9,10 @@
     tools:showIn="@layout/app_bar_main">
 
     <TextView
+        android:id="@+id/name_cam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Text here"
+        android:text="@string/name_cam"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

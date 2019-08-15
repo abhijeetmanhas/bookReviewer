@@ -1,34 +1,44 @@
 package com.abhijeetmanhas.bookreviewer;
 
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-
+import android.view.Menu;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.widget.TextView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    TextView texx;
+    String name, price, rating, url="https://www.google.co.in/search?q=intro to algos&tbm=shop",link;
+    //Menu menu;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        texx=(TextView)findViewById(R.id.name_cam);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                new doit().execute();
+
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -39,7 +49,6 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -54,7 +63,41 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        //this.menu = menu;
         return true;
+    }
+
+    public class doit extends AsyncTask <Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try{
+                Document doc = Jsoup.connect(url).get();
+                name="CLRS";
+                price="₹1000";
+                rating ="4.5";
+                link=url;
+            }catch(Exception e){e.printStackTrace();}
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            texx.setText(name);
+
+            //namei.setTitle(name);
+            /*
+            MenuItem namei = menu.findItem(R.id.book_name);
+
+            MenuItem pricei = menu.findItem(R.id.price);
+            pricei.setTitle(price);
+            MenuItem ratingi = menu.findItem(R.id.rating);
+            ratingi.setTitle(rating);
+            MenuItem linki =menu.findItem(R.id.buy_link);
+            linki.setTitle(url);
+            */
+        }
     }
 
     @Override
@@ -78,14 +121,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
+        if (id == R.id.book_name) {
+            item.setTitle(name);
+        } else if (id == R.id.rating) {
+            item.setTitle(rating);
+        } else if (id == R.id.price) {
+            item.setTitle(price);
+        } else if (id == R.id.buy_link) {
+            item.setTitle(url);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
