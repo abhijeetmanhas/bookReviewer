@@ -23,7 +23,7 @@ import org.jsoup.nodes.Document;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView texx;
-    String name, price, rating, url="https://www.google.co.in/search?q=intro to algos&tbm=shop",link;
+    String name, price, rating, url="https://www.amazon.in/s?i=stripbooks&rh=p_28%3A",link;
     //Menu menu;
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -72,11 +72,13 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-                Document doc = Jsoup.connect(url).get();
+                String stemp = texx.getText().toString();
+                String quer_nam = stemp.replace(' ','+');
+                Document doc = Jsoup.connect(url+quer_nam).get();
                 name="CLRS";
                 price="₹1000";
                 rating ="4.5";
-                link=url;
+                link=url+quer_nam;
             }catch(Exception e){e.printStackTrace();}
             return null;
         }
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            texx.setText(name);
+            texx.setText("Click nav bar for details");
 
             //namei.setTitle(name);
             /*
