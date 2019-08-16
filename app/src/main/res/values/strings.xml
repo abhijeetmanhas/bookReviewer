@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">bookReviewer</string>
+    <string name="app_name">bookRex</string>
     <string name="navigation_drawer_open">View Details</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="nav_header_title">Review your Book</string>
