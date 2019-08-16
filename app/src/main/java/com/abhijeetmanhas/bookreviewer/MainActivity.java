@@ -1,5 +1,5 @@
 package com.abhijeetmanhas.bookreviewer;
-
+import org.jsoup.nodes.Element;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,11 +19,12 @@ import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView texx;
-    String name, price, rating, url="https://www.amazon.in/s?i=stripbooks&rh=p_28%3A",link;
+    String name, price, rating, url="https://www.flipkart.com/search?q=",url2="&sid=bks",link;
     //Menu menu;
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -74,11 +75,14 @@ public class MainActivity extends AppCompatActivity
             try{
                 String stemp = texx.getText().toString();
                 String quer_nam = stemp.replace(' ','+');
-                Document doc = Jsoup.connect(url+quer_nam).get();
-                name="CLRS";
-                price="₹1000";
-                rating ="4.5";
-                link=url+quer_nam;
+                Document doc = Jsoup.connect(url+quer_nam+url2).get();
+                Element e1 = doc.select("a._2cLu-l").first();
+                Element e2 = doc.select("div.hGSR34").first();
+                Element e3 = doc.select("div._1vC4OE").first();
+                name=e1.text();
+                rating=e2.text();
+                price=e3.text();
+                link=url+quer_nam+url2;
             }catch(Exception e){e.printStackTrace();}
             return null;
         }
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            texx.setText("Click nav bar for details");
+            texx.setText("swap the nav bar");
 
             //namei.setTitle(name);
             /*
@@ -137,8 +141,6 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
